@@ -12,6 +12,6 @@ interface WaterDao {
     @Query("SELECT SUM(amountMl) FROM water_entries")
     fun getTotalWaterToday(): Flow<Int?>
 
-    @Query("DELETE FROM water_entries ORDER BY timestamp DESC LIMIT 1")
+    @Query("DELETE FROM water_entries WHERE id IN (SELECT id FROM water_entries ORDER BY timestamp DESC LIMIT 1)")
     suspend fun undoLastEntry()
 }
